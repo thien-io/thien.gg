@@ -8,7 +8,7 @@ export default function HomePage() {
         {/* Links */}
         <nav className="flex flex-col items-center gap-3 text-lg">
           <a href="/tomo" className="text-blue-600 underline hover:text-blue-800 visited:text-purple-600">
-            thien.gg/tomo
+            tomo
           </a>
           <a
             href="https://discord.gg/users/thien.gg"
