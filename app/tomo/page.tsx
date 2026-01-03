@@ -3,7 +3,7 @@ export default function TomoPage() {
     <main className="min-h-screen flex items-center justify-center bg-white p-4">
       <div className="text-center space-y-8">
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl font-bold text-black">Tomodachi Zuko [TOMO]</h1>
+
 
         {/* Discord Invite */}
         <div className="space-y-4">
@@ -14,14 +14,14 @@ export default function TomoPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Click here to join
+            Tomodachi Zuko [TOMO]
           </a>
         </div>
 
         {/* Back link */}
         <div className="pt-8">
           <a href="/" className="text-sm text-blue-600 underline hover:text-blue-800 visited:text-purple-600">
-            ← Back to home
+            ← Home
           </a>
         </div>
       </div>

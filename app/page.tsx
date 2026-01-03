@@ -3,7 +3,7 @@ export default function HomePage() {
     <main className="min-h-screen flex items-center justify-center bg-white p-4">
       <div className="text-center space-y-8">
         {/* Logo/Title */}
-        <h1 className="text-5xl md:text-6xl font-bold text-black tracking-tight">thien.gg</h1>
+        <h1 className="text-5xl md:text-6xl font-bold text-black tracking-tight">thien</h1>
 
         {/* Links */}
         <nav className="flex flex-col items-center gap-3 text-lg">
