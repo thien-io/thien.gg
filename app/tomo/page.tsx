@@ -9,7 +9,7 @@ export default function TomoPage() {
         <div className="space-y-4">
           <p className="text-lg text-gray-700">Join our guild Discord server:</p>
           <a
-            href="https://discord.gg/mBRgJBKmfw"
+            href="https://discord.gg/sdDNBDbqJH"
             className="inline-block text-xl text-blue-600 underline hover:text-blue-800 visited:text-purple-600"
             target="_blank"
             rel="noopener noreferrer"
