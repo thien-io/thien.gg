@@ -5,8 +5,8 @@ import './globals.css';
 
 
 export const metadata: Metadata = {
-  title: "thien.gg",
-  description: "thien.gg",
+  title: "thien.gg | Discord",
+  description: "Welcome to thien.gg - A Discord-inspired personal website",
   icons: {
     icon: [
       {
