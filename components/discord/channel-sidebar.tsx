@@ -1,9 +1,11 @@
 "use client"
 
+import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { useLanyard, getStatusColor, getAvatarUrl } from "@/hooks/use-lanyard"
 import { Hash, Volume2, ChevronDown, Settings, Mic, Headphones } from "lucide-react"
 import type { Channel } from "./discord-layout"
+import { ProfilePopup } from "./profile-popup"
 
 const categories = ["INFO", "CHAT", "VOICE"]
 
@@ -15,6 +17,7 @@ interface ChannelSidebarProps {
 
 export function ChannelSidebar({ channels, activeChannel, onChannelSelect }: ChannelSidebarProps) {
   const { data, isLoading } = useLanyard()
+  const [showProfilePopup, setShowProfilePopup] = useState(false)
 
   return (
     <div className="flex h-full w-56 flex-col bg-[var(--discord-dark)] md:w-60">
@@ -47,8 +50,14 @@ export function ChannelSidebar({ channels, activeChannel, onChannelSelect }: Cha
       </div>
 
       {/* User Area */}
-      <div className="flex h-[52px] items-center gap-2 bg-[var(--discord-darker)] px-2">
-        <div className="relative">
+      <div className="relative flex h-[52px] items-center gap-2 bg-[var(--discord-darker)] px-2">
+        {/* Profile Popup */}
+        <ProfilePopup isOpen={showProfilePopup} onClose={() => setShowProfilePopup(false)} />
+        
+        <button 
+          onClick={() => setShowProfilePopup(!showProfilePopup)}
+          className="group relative rounded hover:bg-[var(--discord-lighter)]"
+        >
           {isLoading ? (
             <div className="h-8 w-8 animate-pulse rounded-full bg-[var(--discord-lighter)]" />
           ) : (
@@ -60,13 +69,13 @@ export function ChannelSidebar({ channels, activeChannel, onChannelSelect }: Cha
               />
               <div
                 className={cn(
-                  "absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full border-[3px] border-[var(--discord-darker)]",
+                  "absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full border-[3px] border-[var(--discord-darker)] group-hover:border-[var(--discord-lighter)]",
                   getStatusColor(data?.discord_status || "offline")
                 )}
               />
             </>
           )}
-        </div>
+        </button>
         <div className="flex-1 overflow-hidden">
           <p className="truncate text-sm font-medium text-[var(--discord-text)]">
             {data?.discord_user?.global_name || data?.discord_user?.username || "Loading..."}
