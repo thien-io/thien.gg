@@ -3,19 +3,17 @@
 import { cn } from "@/lib/utils"
 import { useLanyard, getStatusColor, getAvatarUrl } from "@/hooks/use-lanyard"
 import { Hash, Volume2, ChevronDown, Settings, Mic, Headphones } from "lucide-react"
-
-const channels = [
-  { id: "welcome", name: "welcome", type: "text", category: "INFO" },
-  { id: "about", name: "about-me", type: "text", category: "INFO" },
-  { id: "general", name: "general", type: "text", category: "CHAT", active: true },
-  { id: "projects", name: "projects", type: "text", category: "CHAT" },
-  { id: "music", name: "music", type: "voice", category: "VOICE" },
-  { id: "gaming", name: "gaming", type: "voice", category: "VOICE" },
-]
+import type { Channel } from "./discord-layout"
 
 const categories = ["INFO", "CHAT", "VOICE"]
 
-export function ChannelSidebar() {
+interface ChannelSidebarProps {
+  channels: Channel[]
+  activeChannel: string
+  onChannelSelect: (channelId: string) => void
+}
+
+export function ChannelSidebar({ channels, activeChannel, onChannelSelect }: ChannelSidebarProps) {
   const { data, isLoading } = useLanyard()
 
   return (
@@ -37,7 +35,12 @@ export function ChannelSidebar() {
             {channels
               .filter((c) => c.category === category)
               .map((channel) => (
-                <ChannelItem key={channel.id} channel={channel} />
+                <ChannelItem 
+                  key={channel.id} 
+                  channel={channel} 
+                  isActive={activeChannel === channel.id}
+                  onSelect={() => onChannelSelect(channel.id)}
+                />
               ))}
           </div>
         ))}
@@ -88,14 +91,21 @@ export function ChannelSidebar() {
   )
 }
 
-function ChannelItem({ channel }: { channel: typeof channels[0] }) {
+interface ChannelItemProps {
+  channel: Channel
+  isActive: boolean
+  onSelect: () => void
+}
+
+function ChannelItem({ channel, isActive, onSelect }: ChannelItemProps) {
   const Icon = channel.type === "voice" ? Volume2 : Hash
 
   return (
     <button
+      onClick={onSelect}
       className={cn(
         "group flex w-full items-center gap-1.5 rounded px-2 py-1.5 text-[var(--discord-channel-text)] transition-colors hover:bg-[var(--discord-lighter)] hover:text-[var(--discord-text)]",
-        channel.active && "bg-[var(--discord-lighter)] text-[var(--discord-text)]"
+        isActive && "bg-[var(--discord-lighter)] text-[var(--discord-text)]"
       )}
     >
       <Icon className="h-5 w-5 shrink-0" />
