@@ -17,7 +17,7 @@ export function ChannelSidebar({ channels, activeChannel, onChannelSelect }: Cha
   const { data, isLoading } = useLanyard()
 
   return (
-    <div className="flex h-full w-60 flex-col bg-[var(--discord-dark)]">
+    <div className="flex h-full w-56 flex-col bg-[var(--discord-dark)] md:w-60">
       {/* Server Header */}
       <button className="flex h-12 items-center justify-between border-b border-[#1f2023] px-4 shadow-sm transition-colors hover:bg-[var(--discord-lighter)]">
         <span className="font-semibold text-[var(--discord-text)]">thien.gg</span>

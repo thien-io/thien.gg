@@ -4,13 +4,25 @@ import { useLanyard, getStatusColor, getStatusText, getAvatarUrl } from "@/hooks
 import { cn } from "@/lib/utils"
 import { SpotifyCard } from "./spotify-card"
 import { ActivityCard } from "./activity-card"
+import { X } from "lucide-react"
 
-export function MemberSidebar() {
+interface MemberSidebarProps {
+  onClose?: () => void
+}
+
+export function MemberSidebar({ onClose }: MemberSidebarProps) {
   const { data, isLoading } = useLanyard()
 
   if (isLoading) {
     return (
-      <div className="hidden w-60 flex-col bg-[var(--discord-dark)] lg:flex">
+      <div className="flex h-full w-60 flex-col bg-[var(--discord-dark)]">
+        {/* Mobile close button */}
+        <div className="flex h-12 items-center justify-between border-b border-[var(--discord-darker)] px-4 lg:hidden">
+          <span className="font-semibold text-[var(--discord-text)]">Members</span>
+          <button onClick={onClose} className="p-1 text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
         <div className="p-4">
           <div className="h-4 w-20 animate-pulse rounded bg-[var(--discord-lighter)]" />
         </div>
@@ -25,7 +37,14 @@ export function MemberSidebar() {
   }
 
   return (
-    <div className="hidden w-60 flex-col bg-[var(--discord-dark)] lg:flex">
+    <div className="flex h-full w-60 flex-col bg-[var(--discord-dark)]">
+      {/* Mobile close button */}
+      <div className="flex h-12 items-center justify-between border-b border-[var(--discord-darker)] px-4 lg:hidden">
+        <span className="font-semibold text-[var(--discord-text)]">Members</span>
+        <button onClick={onClose} className="p-1 text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
+          <X className="h-5 w-5" />
+        </button>
+      </div>
       {/* Owner Section */}
       <div className="px-4 pt-6">
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--discord-channel-text)]">

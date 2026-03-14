@@ -1,7 +1,7 @@
 "use client"
 
 import { useLanyard, getAvatarUrl } from "@/hooks/use-lanyard"
-import { Hash, Bell, Pin, Users, Search, Inbox, HelpCircle, PlusCircle, Gift, Sticker, Smile, Volume2, Music, Gamepad2, Code, User, Sparkles, ExternalLink, Github, Twitter, Mail } from "lucide-react"
+import { Hash, Bell, Pin, Users, Search, Inbox, HelpCircle, PlusCircle, Gift, Sticker, Smile, Volume2, Music, Gamepad2, Code, User, Sparkles, ExternalLink, Menu } from "lucide-react"
 import { SpotifyCard } from "./spotify-card"
 import { ActivityCard } from "./activity-card"
 import type { Channel } from "./discord-layout"
@@ -9,6 +9,8 @@ import type { Channel } from "./discord-layout"
 interface ChatAreaProps {
   channels: Channel[]
   activeChannel: string
+  onMenuClick?: () => void
+  onMembersClick?: () => void
 }
 
 // Channel content configurations
@@ -82,7 +84,7 @@ const channelContent: Record<string, {
   },
 }
 
-export function ChatArea({ channels, activeChannel }: ChatAreaProps) {
+export function ChatArea({ channels, activeChannel, onMenuClick, onMembersClick }: ChatAreaProps) {
   const { data } = useLanyard()
   const currentChannel = channels.find(c => c.id === activeChannel)
   const isVoiceChannel = currentChannel?.type === "voice"
@@ -93,21 +95,27 @@ export function ChatArea({ channels, activeChannel }: ChatAreaProps) {
     return (
       <div className="flex flex-1 flex-col bg-[var(--discord-light)]">
         {/* Channel Header */}
-        <ChannelHeader channelName={currentChannel?.name || ""} isVoice description={activeChannel === "music" ? "Share your favorite tunes" : "Game time!"} />
+        <ChannelHeader 
+          channelName={currentChannel?.name || ""} 
+          isVoice 
+          description={activeChannel === "music" ? "Share your favorite tunes" : "Game time!"}
+          onMenuClick={onMenuClick}
+          onMembersClick={onMembersClick}
+        />
         
         {/* Voice Channel Content */}
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 p-8">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--discord-blurple)]">
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 p-4 md:gap-4 md:p-8">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--discord-blurple)] md:h-20 md:w-20">
             {activeChannel === "music" ? (
-              <Music className="h-10 w-10 text-white" />
+              <Music className="h-8 w-8 text-white md:h-10 md:w-10" />
             ) : (
-              <Gamepad2 className="h-10 w-10 text-white" />
+              <Gamepad2 className="h-8 w-8 text-white md:h-10 md:w-10" />
             )}
           </div>
-          <h2 className="text-2xl font-bold text-[var(--discord-text)]">
+          <h2 className="text-xl font-bold text-[var(--discord-text)] md:text-2xl">
             {activeChannel === "music" ? "Music Channel" : "Gaming Channel"}
           </h2>
-          <p className="text-center text-[var(--discord-text-muted)]">
+          <p className="max-w-sm text-center text-sm text-[var(--discord-text-muted)] md:text-base">
             {activeChannel === "music" 
               ? "This is where I hang out and listen to music. Check my Spotify status to see what I'm listening to!" 
               : "This is my gaming channel. Check my activity status to see what I'm playing!"}
@@ -141,52 +149,57 @@ export function ChatArea({ channels, activeChannel }: ChatAreaProps) {
   return (
     <div className="flex flex-1 flex-col bg-[var(--discord-light)]">
       {/* Channel Header */}
-      <ChannelHeader channelName={currentChannel?.name || ""} description={content?.description || ""} />
+      <ChannelHeader 
+        channelName={currentChannel?.name || ""} 
+        description={content?.description || ""}
+        onMenuClick={onMenuClick}
+        onMembersClick={onMembersClick}
+      />
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto px-4 py-4">
+      <div className="flex-1 overflow-y-auto px-2 py-4 md:px-4">
         {/* Welcome Message */}
-        <div className="mb-8 rounded-lg">
-          <div className="mb-2 flex h-[68px] w-[68px] items-center justify-center rounded-full bg-[var(--discord-blurple)]">
-            {content?.icon || <Hash className="h-10 w-10 text-white" />}
+        <div className="mb-6 rounded-lg md:mb-8">
+          <div className="mb-2 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--discord-blurple)] md:h-[68px] md:w-[68px]">
+            {content?.icon || <Hash className="h-8 w-8 text-white md:h-10 md:w-10" />}
           </div>
-          <h1 className="text-3xl font-bold text-[var(--discord-text)]">Welcome to #{currentChannel?.name}</h1>
-          <p className="text-[var(--discord-text-muted)]">{content?.description || `This is the start of the #${currentChannel?.name} channel.`}</p>
+          <h1 className="text-2xl font-bold text-[var(--discord-text)] md:text-3xl">Welcome to #{currentChannel?.name}</h1>
+          <p className="text-sm text-[var(--discord-text-muted)] md:text-base">{content?.description || `This is the start of the #${currentChannel?.name} channel.`}</p>
         </div>
 
         {/* Messages */}
         <div className="space-y-4">
           {content?.messages.map((message) => (
-            <div key={message.id} className="group flex gap-4 rounded px-2 py-0.5 hover:bg-[var(--discord-lighter)]/30">
+            <div key={message.id} className="group flex gap-3 rounded px-1 py-0.5 hover:bg-[var(--discord-lighter)]/30 md:gap-4 md:px-2">
               <img
                 src={data ? getAvatarUrl(data.discord_user.id, data.discord_user.avatar) : "https://cdn.discordapp.com/embed/avatars/0.png"}
                 alt="thien"
-                className="h-10 w-10 rounded-full"
+                className="h-8 w-8 rounded-full md:h-10 md:w-10"
               />
-              <div className="flex-1">
-                <div className="flex items-baseline gap-2">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline gap-1 md:gap-2">
                   <span className="font-medium text-[var(--discord-text)]">thien</span>
-                  <span className="text-xs text-[var(--discord-text-muted)]">{message.timestamp}</span>
+                  <span className="text-[10px] text-[var(--discord-text-muted)] md:text-xs">{message.timestamp}</span>
                 </div>
-                <div className="text-[var(--discord-text)]">{message.content}</div>
+                <div className="break-words text-sm text-[var(--discord-text)] md:text-base">{message.content}</div>
               </div>
             </div>
           ))}
 
           {/* Show Spotify in general channel */}
           {activeChannel === "general" && data?.listening_to_spotify && data.spotify && (
-            <div className="group flex gap-4 rounded px-2 py-0.5 hover:bg-[var(--discord-lighter)]/30">
+            <div className="group flex gap-3 rounded px-1 py-0.5 hover:bg-[var(--discord-lighter)]/30 md:gap-4 md:px-2">
               <img
                 src={data ? getAvatarUrl(data.discord_user.id, data.discord_user.avatar) : ""}
                 alt="thien"
-                className="h-10 w-10 rounded-full"
+                className="h-8 w-8 rounded-full md:h-10 md:w-10"
               />
-              <div className="flex-1">
-                <div className="flex items-baseline gap-2">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline gap-1 md:gap-2">
                   <span className="font-medium text-[var(--discord-text)]">thien</span>
-                  <span className="text-xs text-[var(--discord-text-muted)]">Now</span>
+                  <span className="text-[10px] text-[var(--discord-text-muted)] md:text-xs">Now</span>
                 </div>
-                <p className="mb-2 text-[var(--discord-text)]">Currently listening to:</p>
+                <p className="mb-2 text-sm text-[var(--discord-text)] md:text-base">Currently listening to:</p>
                 <SpotifyCard spotify={data.spotify} />
               </div>
             </div>
@@ -194,18 +207,18 @@ export function ChatArea({ channels, activeChannel }: ChatAreaProps) {
 
           {/* Show Activity in general channel */}
           {activeChannel === "general" && data?.activities && data.activities.filter(a => a.type !== 2 && a.type !== 4).length > 0 && (
-            <div className="group flex gap-4 rounded px-2 py-0.5 hover:bg-[var(--discord-lighter)]/30">
+            <div className="group flex gap-3 rounded px-1 py-0.5 hover:bg-[var(--discord-lighter)]/30 md:gap-4 md:px-2">
               <img
                 src={data ? getAvatarUrl(data.discord_user.id, data.discord_user.avatar) : ""}
                 alt="thien"
-                className="h-10 w-10 rounded-full"
+                className="h-8 w-8 rounded-full md:h-10 md:w-10"
               />
-              <div className="flex-1">
-                <div className="flex items-baseline gap-2">
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline gap-1 md:gap-2">
                   <span className="font-medium text-[var(--discord-text)]">thien</span>
-                  <span className="text-xs text-[var(--discord-text-muted)]">Now</span>
+                  <span className="text-[10px] text-[var(--discord-text-muted)] md:text-xs">Now</span>
                 </div>
-                <p className="mb-2 text-[var(--discord-text)]">Current activity:</p>
+                <p className="mb-2 text-sm text-[var(--discord-text)] md:text-base">Current activity:</p>
                 {data.activities
                   .filter(a => a.type !== 2 && a.type !== 4)
                   .slice(0, 1)
@@ -219,26 +232,26 @@ export function ChatArea({ channels, activeChannel }: ChatAreaProps) {
       </div>
 
       {/* Message Input */}
-      <div className="px-4 pb-6">
-        <div className="flex items-center gap-2 rounded-lg bg-[var(--discord-lighter)] px-4 py-2.5">
+      <div className="px-2 pb-4 md:px-4 md:pb-6">
+        <div className="flex items-center gap-2 rounded-lg bg-[var(--discord-lighter)] px-3 py-2 md:px-4 md:py-2.5">
           <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-            <PlusCircle className="h-6 w-6" />
+            <PlusCircle className="h-5 w-5 md:h-6 md:w-6" />
           </button>
           <input
             type="text"
             placeholder={`Message #${currentChannel?.name}`}
-            className="flex-1 bg-transparent text-[var(--discord-text)] placeholder-[var(--discord-text-muted)] outline-none"
+            className="min-w-0 flex-1 bg-transparent text-sm text-[var(--discord-text)] placeholder-[var(--discord-text-muted)] outline-none md:text-base"
             disabled
           />
-          <div className="flex items-center gap-2">
-            <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-              <Gift className="h-6 w-6" />
+          <div className="flex items-center gap-1 md:gap-2">
+            <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] sm:block">
+              <Gift className="h-5 w-5 md:h-6 md:w-6" />
+            </button>
+            <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] sm:block">
+              <Sticker className="h-5 w-5 md:h-6 md:w-6" />
             </button>
             <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-              <Sticker className="h-6 w-6" />
-            </button>
-            <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-              <Smile className="h-6 w-6" />
+              <Smile className="h-5 w-5 md:h-6 md:w-6" />
             </button>
           </div>
         </div>
@@ -247,28 +260,51 @@ export function ChatArea({ channels, activeChannel }: ChatAreaProps) {
   )
 }
 
-function ChannelHeader({ channelName, description, isVoice = false }: { channelName: string; description: string; isVoice?: boolean }) {
+function ChannelHeader({ 
+  channelName, 
+  description, 
+  isVoice = false,
+  onMenuClick,
+  onMembersClick
+}: { 
+  channelName: string
+  description: string
+  isVoice?: boolean
+  onMenuClick?: () => void
+  onMembersClick?: () => void
+}) {
   const Icon = isVoice ? Volume2 : Hash
   
   return (
-    <div className="flex h-12 items-center justify-between border-b border-[var(--discord-dark)] px-4 shadow-sm">
+    <div className="flex h-12 items-center justify-between border-b border-[var(--discord-dark)] px-2 shadow-sm md:px-4">
       <div className="flex items-center gap-2">
-        <Icon className="h-6 w-6 text-[var(--discord-channel-text)]" />
-        <span className="font-semibold text-[var(--discord-text)]">{channelName}</span>
-        <div className="mx-2 h-6 w-px bg-[var(--discord-lighter)]" />
-        <span className="text-sm text-[var(--discord-text-muted)]">{description}</span>
-      </div>
-      <div className="flex items-center gap-4">
-        <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-          <Bell className="h-6 w-6" />
+        {/* Mobile menu button */}
+        <button 
+          onClick={onMenuClick}
+          className="p-1.5 text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] md:hidden"
+        >
+          <Menu className="h-5 w-5" />
         </button>
-        <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
+        <Icon className="h-5 w-5 text-[var(--discord-channel-text)] md:h-6 md:w-6" />
+        <span className="font-semibold text-[var(--discord-text)]">{channelName}</span>
+        <div className="mx-2 hidden h-6 w-px bg-[var(--discord-lighter)] sm:block" />
+        <span className="hidden text-sm text-[var(--discord-text-muted)] sm:block">{description}</span>
+      </div>
+      <div className="flex items-center gap-2 md:gap-4">
+        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] sm:block">
+          <Bell className="h-5 w-5 md:h-6 md:w-6" />
+        </button>
+        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] md:block">
           <Pin className="h-6 w-6" />
         </button>
-        <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-          <Users className="h-6 w-6" />
+        {/* Members button - always visible, opens sidebar on mobile */}
+        <button 
+          onClick={onMembersClick}
+          className="p-1.5 text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]"
+        >
+          <Users className="h-5 w-5 md:h-6 md:w-6" />
         </button>
-        <div className="flex h-6 items-center rounded bg-[var(--discord-dark)] px-2">
+        <div className="hidden h-6 items-center rounded bg-[var(--discord-dark)] px-2 lg:flex">
           <input
             type="text"
             placeholder="Search"
@@ -276,10 +312,10 @@ function ChannelHeader({ channelName, description, isVoice = false }: { channelN
           />
           <Search className="h-4 w-4 text-[var(--discord-text-muted)]" />
         </div>
-        <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
+        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] md:block">
           <Inbox className="h-6 w-6" />
         </button>
-        <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
+        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] md:block">
           <HelpCircle className="h-6 w-6" />
         </button>
       </div>
