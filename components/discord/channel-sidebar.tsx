@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { useLanyard, getStatusColor, getAvatarUrl } from "@/hooks/use-lanyard"
-import { Hash, Volume2, ChevronDown, Settings, Mic, Headphones } from "lucide-react"
+import { Hash, Volume2, ChevronDown } from "lucide-react"
 import type { Channel } from "./discord-layout"
 import { ProfilePopup } from "./profile-popup"
 
@@ -22,10 +22,9 @@ export function ChannelSidebar({ channels, activeChannel, onChannelSelect }: Cha
   return (
     <div className="flex h-full w-56 flex-col bg-[var(--discord-dark)] md:w-60">
       {/* Server Header */}
-      <button className="flex h-12 items-center justify-between border-b border-[#1f2023] px-4 shadow-sm transition-colors hover:bg-[var(--discord-lighter)]">
+      <div className="flex h-12 items-center border-b border-[#1f2023] px-4 shadow-sm">
         <span className="font-semibold text-[var(--discord-text)]">thien.gg</span>
-        <ChevronDown className="h-4 w-4 text-[var(--discord-text)]" />
-      </button>
+      </div>
 
       {/* Channel List */}
       <div className="flex-1 overflow-y-auto px-2 py-4">
@@ -83,17 +82,6 @@ export function ChannelSidebar({ channels, activeChannel, onChannelSelect }: Cha
           <p className="truncate text-xs text-[var(--discord-text-muted)]">
             {data?.discord_user?.username || ""}
           </p>
-        </div>
-        <div className="flex gap-1">
-          <button className="rounded p-1 text-[var(--discord-channel-text)] hover:bg-[var(--discord-lighter)] hover:text-[var(--discord-text)]">
-            <Mic className="h-5 w-5" />
-          </button>
-          <button className="rounded p-1 text-[var(--discord-channel-text)] hover:bg-[var(--discord-lighter)] hover:text-[var(--discord-text)]">
-            <Headphones className="h-5 w-5" />
-          </button>
-          <button className="rounded p-1 text-[var(--discord-channel-text)] hover:bg-[var(--discord-lighter)] hover:text-[var(--discord-text)]">
-            <Settings className="h-5 w-5" />
-          </button>
         </div>
       </div>
     </div>
