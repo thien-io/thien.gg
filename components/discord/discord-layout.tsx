@@ -1,11 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { ServerSidebar } from "./server-sidebar"
 import { ChannelSidebar } from "./channel-sidebar"
 import { ChatArea } from "./chat-area"
 import { MemberSidebar } from "./member-sidebar"
-import { Menu, X, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export type Channel = {
@@ -47,26 +45,16 @@ export function DiscordLayout() {
         />
       )}
 
-      {/* Server List - Hidden on mobile */}
-      <div className="hidden md:block">
-        <ServerSidebar />
-      </div>
-      
       {/* Channel List - Slide out on mobile */}
       <div className={cn(
         "fixed left-0 top-0 z-40 h-full transform transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:block",
         showChannelSidebar ? "translate-x-0" : "-translate-x-full"
       )}>
-        <div className="flex h-full">
-          <div className="md:hidden">
-            <ServerSidebar />
-          </div>
-          <ChannelSidebar 
-            channels={channels}
-            activeChannel={activeChannel}
-            onChannelSelect={handleChannelSelect}
-          />
-        </div>
+        <ChannelSidebar 
+          channels={channels}
+          activeChannel={activeChannel}
+          onChannelSelect={handleChannelSelect}
+        />
       </div>
       
       {/* Main Chat Area */}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useLanyard, getAvatarUrl } from "@/hooks/use-lanyard"
-import { Hash, Bell, Pin, Users, Search, Inbox, HelpCircle, PlusCircle, Gift, Sticker, Smile, Volume2, Music, Gamepad2, Code, User, Sparkles, ExternalLink, Menu } from "lucide-react"
+import { Hash, Users, Volume2, Music, Gamepad2, Code, User, Sparkles, ExternalLink, Menu } from "lucide-react"
 import { SpotifyCard } from "./spotify-card"
 import { ActivityCard } from "./activity-card"
 import type { Channel } from "./discord-layout"
@@ -231,32 +231,7 @@ export function ChatArea({ channels, activeChannel, onMenuClick, onMembersClick 
         </div>
       </div>
 
-      {/* Message Input */}
-      <div className="px-2 pb-4 md:px-4 md:pb-6">
-        <div className="flex items-center gap-2 rounded-lg bg-[var(--discord-lighter)] px-3 py-2 md:px-4 md:py-2.5">
-          <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-            <PlusCircle className="h-5 w-5 md:h-6 md:w-6" />
-          </button>
-          <input
-            type="text"
-            placeholder={`Message #${currentChannel?.name}`}
-            className="min-w-0 flex-1 bg-transparent text-sm text-[var(--discord-text)] placeholder-[var(--discord-text-muted)] outline-none md:text-base"
-            disabled
-          />
-          <div className="flex items-center gap-1 md:gap-2">
-            <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] sm:block">
-              <Gift className="h-5 w-5 md:h-6 md:w-6" />
-            </button>
-            <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] sm:block">
-              <Sticker className="h-5 w-5 md:h-6 md:w-6" />
-            </button>
-            <button className="text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]">
-              <Smile className="h-5 w-5 md:h-6 md:w-6" />
-            </button>
-          </div>
-        </div>
       </div>
-    </div>
   )
 }
 
@@ -290,35 +265,13 @@ function ChannelHeader({
         <div className="mx-2 hidden h-6 w-px bg-[var(--discord-lighter)] sm:block" />
         <span className="hidden text-sm text-[var(--discord-text-muted)] sm:block">{description}</span>
       </div>
-      <div className="flex items-center gap-2 md:gap-4">
-        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] sm:block">
-          <Bell className="h-5 w-5 md:h-6 md:w-6" />
-        </button>
-        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] md:block">
-          <Pin className="h-6 w-6" />
-        </button>
-        {/* Members button - always visible, opens sidebar on mobile */}
-        <button 
-          onClick={onMembersClick}
-          className="p-1.5 text-[var(--discord-channel-text)] hover:text-[var(--discord-text)]"
-        >
-          <Users className="h-5 w-5 md:h-6 md:w-6" />
-        </button>
-        <div className="hidden h-6 items-center rounded bg-[var(--discord-dark)] px-2 lg:flex">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-32 bg-transparent text-sm text-[var(--discord-text)] placeholder-[var(--discord-text-muted)] outline-none"
-          />
-          <Search className="h-4 w-4 text-[var(--discord-text-muted)]" />
-        </div>
-        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] md:block">
-          <Inbox className="h-6 w-6" />
-        </button>
-        <button className="hidden text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] md:block">
-          <HelpCircle className="h-6 w-6" />
-        </button>
-      </div>
+      {/* Members button - opens sidebar on mobile */}
+      <button 
+        onClick={onMembersClick}
+        className="p-1.5 text-[var(--discord-channel-text)] hover:text-[var(--discord-text)] lg:hidden"
+      >
+        <Users className="h-5 w-5 md:h-6 md:w-6" />
+      </button>
     </div>
   )
 }
