@@ -1,42 +1,26 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Analytics } from "@vercel/analytics/next"
+import type { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
 import './globals.css';
 
-
 export const metadata: Metadata = {
-  title: "thien.gg | Discord",
-  description: "Welcome to thien.gg - A Discord-inspired personal website",
-  icons: {
-    icon: [
-      {
-        url: "/favicon-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/favicon-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/favicon.png",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-touch-icon.png",
+  title: 'thien.gg',
+  description: 'Gamer profile — thien.gg',
+  icons: { icon: '/favicon.ico' },
+  openGraph: {
+    title: 'thien.gg',
+    description: 'Gamer profile',
+    url: 'https://thien.gg',
   },
-}
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased">
-        {children}
-        <Analytics />
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
