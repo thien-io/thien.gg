@@ -2,153 +2,202 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Base fonts loaded as fallback — themes override via JS */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Inter:wght@400;500;600;700&display=swap');
 
+/* ── Default pixel/coder theme vars ──────────────────────────────────────── */
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 224 14% 10%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 224 14% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 14% 10%;
-
-    --primary: 262 80% 58%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 220 14% 92%;
-    --secondary-foreground: 224 14% 20%;
-
-    --muted: 220 14% 94%;
-    --muted-foreground: 220 10% 46%;
-
-    --accent: 220 14% 92%;
-    --accent-foreground: 224 14% 10%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 220 13% 88%;
-    --input: 220 13% 88%;
-    --ring: 262 80% 58%;
-
-    --sidebar: 220 20% 96%;
-    --sidebar-foreground: 224 14% 20%;
-    --sidebar-border: 220 13% 88%;
-
-    --radius: 0.75rem;
-
-    --font-display: 'Rajdhani', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
-
-  .dark {
-    --background: 224 20% 8%;
-    --foreground: 210 20% 95%;
-
-    --card: 224 20% 11%;
-    --card-foreground: 210 20% 95%;
-
-    --popover: 224 20% 11%;
-    --popover-foreground: 210 20% 95%;
-
-    --primary: 262 80% 65%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 224 20% 16%;
-    --secondary-foreground: 210 20% 90%;
-
-    --muted: 224 20% 14%;
-    --muted-foreground: 215 15% 55%;
-
-    --accent: 224 20% 16%;
-    --accent-foreground: 210 20% 95%;
-
+    --background: 224 20% 7%;
+    --foreground: 210 20% 92%;
+    --card: 224 20% 10%;
+    --card-foreground: 210 20% 92%;
+    --popover: 224 20% 10%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 145 80% 42%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 224 20% 15%;
+    --secondary-foreground: 210 20% 85%;
+    --muted: 224 20% 13%;
+    --muted-foreground: 215 15% 50%;
+    --accent: 224 20% 15%;
+    --accent-foreground: 210 20% 92%;
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 224 20% 18%;
     --input: 224 20% 18%;
-    --ring: 262 80% 65%;
+    --ring: 145 80% 42%;
+    --sidebar: 224 25% 5%;
+    --sidebar-foreground: 210 15% 65%;
+    --sidebar-border: 224 20% 13%;
+    --radius: 0.25rem;
 
-    --sidebar: 224 25% 7%;
-    --sidebar-foreground: 210 15% 75%;
-    --sidebar-border: 224 20% 14%;
+    --font-body: 'Inter', sans-serif;
+    --font-display: 'Press Start 2P', monospace;
+    --font-mono: 'Share Tech Mono', monospace;
+    --gradient-a: hsl(145, 80%, 42%);
+    --gradient-b: hsl(174, 80%, 38%);
+    --gradient-c: hsl(200, 80%, 45%);
   }
+
+  .dark { color-scheme: dark; }
 }
 
+/* ── Base styles ─────────────────────────────────────────────────────────── */
 @layer base {
-  * {
-    @apply border-border;
-  }
+  * { @apply border-border; }
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-body);
+    transition: background-color 0.3s ease, color 0.2s ease;
   }
 
-  h1, h2, h3 {
-    font-family: var(--font-display), sans-serif;
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
     letter-spacing: 0.02em;
   }
 
-  code, pre {
-    font-family: var(--font-mono), monospace;
+  code, pre, kbd {
+    font-family: var(--font-mono);
   }
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-border rounded-full;
-}
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-muted-foreground/40;
-}
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-muted-foreground/40; }
+::selection { @apply bg-primary/25 text-foreground; }
 
-/* Selection */
-::selection {
-  @apply bg-primary/30 text-foreground;
-}
-
-/* Noise overlay for depth */
-.noise-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  border-radius: inherit;
-}
-
-/* Glow effects */
-.glow-primary {
-  box-shadow: 0 0 24px hsl(var(--primary) / 0.3);
-}
-
-/* Animated gradient text */
+/* ── Gradient text ───────────────────────────────────────────────────────── */
 .gradient-text {
   @apply bg-clip-text text-transparent;
-  background-image: linear-gradient(135deg, hsl(262, 80%, 65%), hsl(220, 80%, 65%), hsl(190, 80%, 60%));
+  background-image: linear-gradient(135deg, var(--gradient-a), var(--gradient-b), var(--gradient-c));
   background-size: 200% auto;
   animation: gradient-shift 4s ease infinite;
 }
 
 @keyframes gradient-shift {
-  0% { background-position: 0% center; }
-  50% { background-position: 100% center; }
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
   100% { background-position: 0% center; }
 }
 
-/* Snake game canvas */
-#snake-canvas {
-  image-rendering: pixelated;
+/* ── Glow ────────────────────────────────────────────────────────────────── */
+.glow-primary { box-shadow: 0 0 20px hsl(var(--primary) / 0.4); }
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+.animate-fade-in { animation: fade-in 0.4s ease-out; }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Snake canvas ────────────────────────────────────────────────────────── */
+#snake-canvas { image-rendering: pixelated; }
+
+/* ── Per-theme special effects ───────────────────────────────────────────── */
+
+/* Terminal: CRT scanlines overlay */
+[data-site-theme="terminal"] body::after {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.07) 2px,
+    rgba(0, 0, 0, 0.07) 4px
+  );
+}
+
+[data-site-theme="terminal"] .gradient-text {
+  animation: terminal-flicker 6s ease infinite, gradient-shift 4s ease infinite;
+}
+@keyframes terminal-flicker {
+  0%, 94%, 100% { opacity: 1; }
+  95% { opacity: 0.8; }
+  96% { opacity: 1; }
+  97% { opacity: 0.9; }
+}
+
+/* Retro DOS: square everything */
+[data-site-theme="retro"] * { border-radius: 0 !important; }
+
+/* Miami: hot glow on borders */
+[data-site-theme="miami"] .border {
+  box-shadow: 0 0 0 0.5px hsl(320 100% 60% / 0.2);
+}
+[data-site-theme="miami"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(320,100%,65%), hsl(280,80%,65%), hsl(185,100%,50%)) !important;
+}
+[data-site-theme="miami"] .glow-primary {
+  box-shadow: 0 0 30px hsl(320 100% 60% / 0.5), 0 0 60px hsl(185 100% 45% / 0.2);
+}
+
+/* Pixel + Retro: crisp font rendering */
+[data-site-theme="pixel"] h1,
+[data-site-theme="pixel"] h2,
+[data-site-theme="pixel"] h3,
+[data-site-theme="retro"] h1,
+[data-site-theme="retro"] h2,
+[data-site-theme="retro"] h3 {
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+}
+
+/* Paper: understated glow */
+[data-site-theme="paper"] .glow-primary {
+  box-shadow: 0 2px 16px hsl(var(--primary) / 0.15);
+}
+
+/* Nord: very subtle glow */
+[data-site-theme="nord"] .glow-primary {
+  box-shadow: 0 0 24px hsl(var(--primary) / 0.25);
+}
+
+/* ── New theme special effects ───────────────────────────────────────────── */
+
+/* Synthwave: grid perspective floor + glow text */
+[data-site-theme="synthwave"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(280,100%,65%), hsl(320,100%,60%), hsl(195,100%,55%)) !important;
+  filter: drop-shadow(0 0 8px hsl(280,100%,65%));
+}
+[data-site-theme="synthwave"] .glow-primary {
+  box-shadow: 0 0 20px hsl(280 100% 65% / 0.5), 0 0 60px hsl(320 100% 60% / 0.2);
+}
+
+/* Dracula: purple glow */
+[data-site-theme="dracula"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(265,89%,78%), hsl(326,100%,74%), hsl(135,94%,65%)) !important;
+}
+
+/* Solarized: ocean tones */
+[data-site-theme="solarized"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(205,69%,49%), hsl(175,59%,40%), hsl(68,100%,35%)) !important;
+}
+
+/* Forest: earth tones — desaturate borders */
+[data-site-theme="forest"] .border {
+  border-color: hsl(140 18% 18%) !important;
+}
+
+/* Sunset: warm glow */
+[data-site-theme="sunset"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(22,100%,58%), hsl(350,85%,60%), hsl(45,100%,55%)) !important;
+}
+[data-site-theme="sunset"] .glow-primary {
+  box-shadow: 0 0 30px hsl(22 100% 58% / 0.4), 0 0 60px hsl(350 85% 60% / 0.15);
+}
+
+/* Ocean: wavy card borders */
+[data-site-theme="ocean"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(185,75%,42%), hsl(200,70%,50%), hsl(215,80%,55%)) !important;
+}
+[data-site-theme="ocean"] .glow-primary {
+  box-shadow: 0 0 24px hsl(185 75% 42% / 0.35);
 }

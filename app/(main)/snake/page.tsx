@@ -297,10 +297,10 @@ export default function SnakePage() {
   const topScore = leaders[0]?.score ?? 0;
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6">
       <div>
-        <h1 className="text-4xl font-bold font-display gradient-text flex items-center gap-3">
-          <Joystick className="w-8 h-8" /> Snake
+        <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
+Snake
         </h1>
         <p className="text-muted-foreground mt-1">Classic Snake — score makes the leaderboard if you're good enough!</p>
       </div>

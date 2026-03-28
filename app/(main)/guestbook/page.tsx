@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ScrollReveal, StaggerList, fadeUp, scaleIn } from '@/lib/animations';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -95,19 +97,22 @@ export default function GuestbookPage() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-4xl font-bold font-display gradient-text flex items-center gap-3">
-          <BookOpen className="w-8 h-8" />
-          Guestbook
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Leave a message! {entries.length > 0 && <span className="text-foreground font-semibold">{entries.length} messages so far.</span>}
-        </p>
-      </div>
+      <ScrollReveal variants={fadeUp}>
+        <div>
+          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
+
+            Guestbook
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Leave a message! {entries.length > 0 && <span className="text-foreground font-semibold">{entries.length} messages so far.</span>}
+          </p>
+        </div>
+      </ScrollReveal>
 
       {/* Form */}
+      <ScrollReveal variants={fadeUp} delay={100}>
       <Card className="border-primary/20 bg-card/80">
         <CardContent className="pt-6">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -166,8 +171,10 @@ export default function GuestbookPage() {
           </form>
         </CardContent>
       </Card>
+      </ScrollReveal>
 
       {/* Entries */}
+      <ScrollReveal variants={fadeUp} delay={150}>
       <div>
         <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
           Messages
@@ -193,32 +200,37 @@ export default function GuestbookPage() {
         )}
 
         <div className="space-y-3">
-          {entries.map((entry) => (
-            <Card
+          {entries.map((entry, i) => (
+            <motion.div
               key={entry.id}
-              className="hover:border-primary/30 transition-colors duration-200 animate-fade-in"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
             >
-              <CardContent className="pt-4 pb-4">
-                <div className="flex gap-3">
-                  <Avatar name={entry.name} url={entry.avatar_url} />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="font-semibold text-sm">{entry.name}</span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {formatDistanceToNow(new Date(entry.created_at), { addSuffix: true })}
-                      </span>
+              <Card className="hover:border-primary/30 transition-colors duration-200">
+                <CardContent className="pt-4 pb-4">
+                  <div className="flex gap-3">
+                    <Avatar name={entry.name} url={entry.avatar_url} />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <span className="font-semibold text-sm">{entry.name}</span>
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {formatDistanceToNow(new Date(entry.created_at), { addSuffix: true })}
+                        </span>
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed break-words">
+                        {entry.message}
+                      </p>
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed break-words">
-                      {entry.message}
-                    </p>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
+      </ScrollReveal>
     </div>
   );
 }

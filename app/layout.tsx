@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
+import { SiteThemeProvider } from '@/lib/site-theme';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -17,8 +19,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <SiteThemeProvider>
+            <TooltipProvider>
+              {children}
+            </TooltipProvider>
+          </SiteThemeProvider>
         </ThemeProvider>
       </body>
     </html>
