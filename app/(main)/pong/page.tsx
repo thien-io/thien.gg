@@ -289,7 +289,7 @@ export default function PongPage() {
       <ScrollReveal variants={fadeUp}>
         <div>
           <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
-Pong
+ Pong
           </h1>
           <p className="text-muted-foreground mt-1">First to {WIN_SCORE} wins · move your paddle left/right</p>
         </div>

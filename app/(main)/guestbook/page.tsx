@@ -102,7 +102,7 @@ export default function GuestbookPage() {
       <ScrollReveal variants={fadeUp}>
         <div>
           <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
-
+            <BookOpen className="w-6 h-6 shrink-0" />
             Guestbook
           </h1>
           <p className="text-muted-foreground mt-1">

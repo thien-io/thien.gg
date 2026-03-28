@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import {
   motion,
   useInView,
@@ -130,7 +130,8 @@ export function Parallax({
   );
 }
 
-// ── AnimatedNumber — counts up on scroll into view ────────────────────────────
+// ── AnimatedNumber ─────────────────────────────────────────────────────────────
+// Uses rAF loop instead of motion.span numeric animate (avoids TS type errors).
 export function AnimatedNumber({
   value,
   suffix = '',
@@ -143,31 +144,34 @@ export function AnimatedNumber({
   duration?: number;
 }) {
   const spanRef = useRef<HTMLSpanElement>(null);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
+  const inView = useInView(spanRef, { once: true });
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!inView || hasAnimated.current) return;
+    hasAnimated.current = true;
+
+    const startTime = performance.now();
+    const durationMs = duration * 1000;
+
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / durationMs, 1);
+      // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * value);
+      if (spanRef.current) {
+        spanRef.current.textContent = `${prefix}${current.toLocaleString()}${suffix}`;
+      }
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    requestAnimationFrame(tick);
+  }, [inView, value, prefix, suffix, duration]);
 
   return (
-    <span ref={ref}>
-      <motion.span
-        ref={spanRef}
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.3 }}
-        onUpdate={({ opacity }) => {
-          // no-op needed to trigger onUpdate
-        }}
-      >
-        <motion.span
-          initial={0 as unknown as undefined}
-          animate={inView ? value : 0}
-          transition={{ duration, ease: 'easeOut' }}
-          onUpdate={(v: number) => {
-            if (spanRef.current) {
-              spanRef.current.textContent = `${prefix}${Math.round(v).toLocaleString()}${suffix}`;
-            }
-          }}
-        />
-      </motion.span>
+    <span ref={spanRef}>
+      {prefix}0{suffix}
     </span>
   );
 }
