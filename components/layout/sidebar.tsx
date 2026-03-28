@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
   User, Gamepad2, BookOpen, Joystick,
-  Menu, X, Swords, Github, Twitter, BarChart2, Circle,
+  Menu, X, Swords, Github, Twitter, BarChart2, Circle, Keyboard,
   ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,7 @@ const navItems = [
   { href: '/games',     label: 'Games',     icon: Gamepad2 },
   { href: '/stats',     label: 'Stats',     icon: BarChart2 },
   { href: '/guestbook', label: 'Guestbook', icon: BookOpen },
+  { href: '/type',      label: 'Type',      icon: Keyboard },
   { href: '/snake',     label: 'Snake',     icon: Joystick },
   { href: '/pong',      label: 'Pong',      icon: Circle },
 ];

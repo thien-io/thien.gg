@@ -65,3 +65,34 @@ create policy "snake_leaderboard_delete"
 -- Fast top-10 queries
 create index if not exists snake_leaderboard_score_idx
   on public.snake_leaderboard (score desc);
+
+-- ============================================================
+-- 3. WPM leaderboard table
+-- ============================================================
+
+create table if not exists public.wpm_leaderboard (
+  id         bigserial primary key,
+  name       text        not null check (char_length(name) between 1 and 24),
+  wpm        integer     not null check (wpm between 1 and 300),
+  accuracy   integer     not null check (accuracy between 0 and 100),
+  mode       text        not null check (mode in ('15','30','60','120')),
+  created_at timestamptz not null default now()
+);
+
+alter table public.wpm_leaderboard enable row level security;
+
+create policy "wpm_leaderboard_select"
+  on public.wpm_leaderboard for select
+  using (true);
+
+create policy "wpm_leaderboard_insert"
+  on public.wpm_leaderboard for insert
+  with check (true);
+
+create policy "wpm_leaderboard_delete"
+  on public.wpm_leaderboard for delete
+  using (auth.role() = 'authenticated');
+
+-- Composite index for fast per-mode top queries
+create index if not exists wpm_leaderboard_mode_wpm_idx
+  on public.wpm_leaderboard (mode, wpm desc);

@@ -300,7 +300,7 @@ export default function SnakePage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
-Snake
+          <Joystick className="w-6 h-6 shrink-0" /> Snake
         </h1>
         <p className="text-muted-foreground mt-1">Classic Snake — score makes the leaderboard if you're good enough!</p>
       </div>

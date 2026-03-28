@@ -134,7 +134,7 @@ export default function StatsPage() {
       {/* Header */}
       <ScrollReveal variants={fadeUp}>
         <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
- Stats
+          <BarChart2 className="w-6 h-6 shrink-0" /> Stats
         </h1>
         <p className="text-muted-foreground mt-1">Gaming statistics & performance overview</p>
       </ScrollReveal>
