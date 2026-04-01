@@ -290,7 +290,7 @@
 
 /* Sakura: soft shadows */
 [data-site-theme="sakura"] .glow-primary {
-  box-shadow: 0 4px 20px hsl(348,72%,60%,0.2);
+  box-shadow: 0 4px 20px hsla(348,72%,60%,0.2);
 }
 
 /* Bubblegum: bouncy border-radius */
