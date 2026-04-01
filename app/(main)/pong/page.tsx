@@ -288,8 +288,8 @@ export default function PongPage() {
     <div className="space-y-6 pb-10">
       <ScrollReveal variants={fadeUp}>
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
-            <Gamepad2 className="w-6 h-6 shrink-0" /> Pong
+          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text">
+            Pong
           </h1>
           <p className="text-muted-foreground mt-1">First to {WIN_SCORE} wins · move your paddle left/right</p>
         </div>

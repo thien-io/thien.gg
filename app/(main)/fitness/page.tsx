@@ -85,8 +85,8 @@ export default function FitnessPage() {
     <div className="space-y-8 pb-10">
       <ScrollReveal variants={fadeUp}>
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
-            <Dumbbell className="w-6 h-6 shrink-0" /> Fitness
+          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text">
+            Fitness
           </h1>
           <p className="text-muted-foreground mt-1">Workout logs, PRs, and progress tracking</p>
         </div>

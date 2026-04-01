@@ -375,8 +375,8 @@ export default function TypePage() {
       {/* Header */}
       <ScrollReveal variants={fadeUp}>
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
-            <Keyboard className="w-6 h-6 shrink-0" /> Type
+          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text">
+            Type
           </h1>
           <p className="text-muted-foreground mt-1">How fast can you type? Tab to restart.</p>
         </div>

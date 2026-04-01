@@ -78,8 +78,8 @@ export default function SportsPage() {
     <div className="space-y-8 pb-10">
       <ScrollReveal variants={fadeUp}>
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text flex items-center gap-2.5 flex-wrap">
-            <Trophy className="w-6 h-6 shrink-0" /> Sports
+          <h1 className="text-3xl sm:text-4xl font-bold font-display gradient-text">
+            Sports
           </h1>
           <p className="text-muted-foreground mt-1">My athletic life, stats, and favourite teams</p>
         </div>
