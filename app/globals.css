@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base fonts loaded as fallback — themes override via JS */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&family=Inter:wght@400;500;600;700&display=swap');
 
-/* ── Default pixel/coder theme vars ──────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   CSS CUSTOM PROPERTIES — default pixel theme
+───────────────────────────────────────────────────────────────────────────── */
 @layer base {
   :root {
     --background: 224 20% 7%;
@@ -31,26 +32,32 @@
     --sidebar-foreground: 210 15% 65%;
     --sidebar-border: 224 20% 13%;
     --radius: 0.25rem;
-
     --font-body: 'Inter', sans-serif;
     --font-display: 'Press Start 2P', monospace;
     --font-mono: 'Share Tech Mono', monospace;
     --gradient-a: hsl(145, 80%, 42%);
     --gradient-b: hsl(174, 80%, 38%);
     --gradient-c: hsl(200, 80%, 45%);
-  }
 
+    /* Smooth scroll */
+    scroll-behavior: smooth;
+  }
   .dark { color-scheme: dark; }
 }
 
-/* ── Base styles ─────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────────────────────────────────────── */
 @layer base {
-  * { @apply border-border; }
+  * { @apply border-border; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
 
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
-    transition: background-color 0.3s ease, color 0.2s ease;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.4s ease, color 0.25s ease;
   }
 
   h1, h2, h3, h4 {
@@ -61,143 +68,251 @@
   code, pre, kbd {
     font-family: var(--font-mono);
   }
+
+  /* Page transitions — smooth content reveal */
+  main { overflow-x: hidden; }
 }
 
-/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { @apply bg-border rounded-full; }
 ::-webkit-scrollbar-thumb:hover { @apply bg-muted-foreground/40; }
 ::selection { @apply bg-primary/25 text-foreground; }
 
-/* ── Gradient text ───────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   GRADIENT TEXT — theme-aware
+───────────────────────────────────────────────────────────────────────────── */
 .gradient-text {
   @apply bg-clip-text text-transparent;
   background-image: linear-gradient(135deg, var(--gradient-a), var(--gradient-b), var(--gradient-c));
   background-size: 200% auto;
-  animation: gradient-shift 4s ease infinite;
+  animation: gradient-shift 5s ease infinite;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────────────────────────────────────────────── */
 @keyframes gradient-shift {
   0%   { background-position: 0% center; }
   50%  { background-position: 100% center; }
   100% { background-position: 0% center; }
 }
 
-/* ── Glow ────────────────────────────────────────────────────────────────── */
-.glow-primary { box-shadow: 0 0 20px hsl(var(--primary) / 0.4); }
-
-/* ── Animations ──────────────────────────────────────────────────────────── */
-.animate-fade-in { animation: fade-in 0.4s ease-out; }
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Snake canvas ────────────────────────────────────────────────────────── */
-#snake-canvas { image-rendering: pixelated; }
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* ── Per-theme special effects ───────────────────────────────────────────── */
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
 
-/* Terminal: CRT scanlines overlay */
-[data-site-theme="terminal"] body::after {
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px hsl(var(--primary)/0.3); }
+  50%       { box-shadow: 0 0 25px hsl(var(--primary)/0.6), 0 0 50px hsl(var(--primary)/0.2); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   UTILITY CLASSES
+───────────────────────────────────────────────────────────────────────────── */
+.animate-fade-in    { animation: fade-in 0.45s ease-out both; }
+.animate-slide-up   { animation: slide-up 0.5s ease-out both; }
+.animate-scale-in   { animation: scale-in 0.4s ease-out both; }
+.animate-float      { animation: float 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2.5s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow 8s linear infinite; }
+
+/* Shimmer skeleton */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--muted-foreground)/0.15) 50%,
+    hsl(var(--muted)) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 1.8s linear infinite;
+}
+
+/* Ticker / news-scroll */
+.ticker-wrap { overflow: hidden; }
+.ticker-inner {
+  display: flex;
+  width: max-content;
+  animation: ticker 22s linear infinite;
+}
+.ticker-inner:hover { animation-play-state: paused; }
+
+/* Glow utilities */
+.glow-primary { box-shadow: 0 0 20px hsl(var(--primary)/0.35); }
+.glow-sm      { box-shadow: 0 0 10px hsl(var(--primary)/0.25); }
+.glow-lg      { box-shadow: 0 0 40px hsl(var(--primary)/0.4), 0 0 80px hsl(var(--primary)/0.15); }
+
+/* Glass card */
+.glass {
+  background: hsl(var(--card)/0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border)/0.5);
+}
+
+/* Hover lift */
+.hover-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px hsl(var(--primary)/0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PARALLAX SECTIONS
+───────────────────────────────────────────────────────────────────────────── */
+.parallax-section { will-change: transform; }
+
+/* Hero section with perspective */
+.hero-perspective {
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   SNAKE / GAME CANVAS
+───────────────────────────────────────────────────────────────────────────── */
+#snake-canvas, #pong-canvas { image-rendering: pixelated; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TYPING TEST
+───────────────────────────────────────────────────────────────────────────── */
+.typing-caret {
+  animation: caret-blink 1s step-end infinite;
+}
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   THEME-SPECIFIC OVERRIDES
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Terminal: CRT scanlines */
+[data-site-theme="terminal"] body::after,
+[data-site-theme="hacker"] body::after {
   content: '';
   pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 9999;
   background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.07) 2px,
-    rgba(0, 0, 0, 0.07) 4px
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
   );
 }
 
-[data-site-theme="terminal"] .gradient-text {
-  animation: terminal-flicker 6s ease infinite, gradient-shift 4s ease infinite;
+/* Hacker: glitch flicker on headings */
+[data-site-theme="hacker"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(120,100%,50%), hsl(140,100%,45%), hsl(100,100%,45%)) !important;
+  animation: gradient-shift 4s ease infinite, hacker-flicker 8s ease infinite;
 }
-@keyframes terminal-flicker {
-  0%, 94%, 100% { opacity: 1; }
-  95% { opacity: 0.8; }
-  96% { opacity: 1; }
-  97% { opacity: 0.9; }
+@keyframes hacker-flicker {
+  0%, 97%, 100% { opacity: 1; }
+  98% { opacity: 0.8; }
+  99% { opacity: 1; }
 }
 
-/* Retro DOS: square everything */
+/* Retro / Pixel: square everything */
 [data-site-theme="retro"] * { border-radius: 0 !important; }
+[data-site-theme="pixel"] h1,
+[data-site-theme="pixel"] h2,
+[data-site-theme="retro"] h1,
+[data-site-theme="retro"] h2 { -webkit-font-smoothing: none; }
 
-/* Miami: hot glow on borders */
-[data-site-theme="miami"] .border {
-  box-shadow: 0 0 0 0.5px hsl(320 100% 60% / 0.2);
+/* Miami / Synthwave / Vaporwave / Neon: glow overrides */
+[data-site-theme="miami"] .glow-primary,
+[data-site-theme="synthwave"] .glow-primary,
+[data-site-theme="vaporwave"] .glow-primary,
+[data-site-theme="neon"] .glow-primary {
+  box-shadow: 0 0 20px hsl(var(--primary)/0.5), 0 0 60px hsl(var(--primary)/0.2);
 }
 [data-site-theme="miami"] .gradient-text {
   background-image: linear-gradient(135deg, hsl(320,100%,65%), hsl(280,80%,65%), hsl(185,100%,50%)) !important;
 }
-[data-site-theme="miami"] .glow-primary {
-  box-shadow: 0 0 30px hsl(320 100% 60% / 0.5), 0 0 60px hsl(185 100% 45% / 0.2);
+[data-site-theme="neon"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(60,100%,50%), hsl(300,100%,55%), hsl(190,100%,50%)) !important;
+  filter: drop-shadow(0 0 8px hsl(60,100%,50%));
+}
+[data-site-theme="vaporwave"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(316,80%,72%), hsl(270,70%,70%), hsl(186,80%,70%)) !important;
 }
 
-/* Pixel + Retro: crisp font rendering */
-[data-site-theme="pixel"] h1,
-[data-site-theme="pixel"] h2,
-[data-site-theme="pixel"] h3,
-[data-site-theme="retro"] h1,
-[data-site-theme="retro"] h2,
-[data-site-theme="retro"] h3 {
-  -webkit-font-smoothing: none;
-  font-smooth: never;
+/* Gold: luxury shimmer on gradient text */
+[data-site-theme="gold"] .gradient-text {
+  background-image: linear-gradient(135deg, hsl(43,90%,52%), hsl(50,100%,65%), hsl(35,80%,48%), hsl(43,90%,52%)) !important;
+  background-size: 300% auto;
+  animation: shimmer 3s linear infinite;
 }
 
-/* Paper: understated glow */
+/* Blueprint: grid paper background on cards */
+[data-site-theme="blueprint"] .rounded-xl,
+[data-site-theme="blueprint"] .rounded-lg {
+  border-width: 1px;
+}
+
+/* Sakura: soft shadows */
+[data-site-theme="sakura"] .glow-primary {
+  box-shadow: 0 4px 20px hsl(348,72%,60%,0.2);
+}
+
+/* Bubblegum: bouncy border-radius */
+[data-site-theme="bubblegum"] .rounded-xl { border-radius: 1.5rem !important; }
+[data-site-theme="bubblegum"] .rounded-lg  { border-radius: 1.25rem !important; }
+
+/* Paper: serif feel, light shadows */
 [data-site-theme="paper"] .glow-primary {
-  box-shadow: 0 2px 16px hsl(var(--primary) / 0.15);
+  box-shadow: 0 2px 16px hsl(var(--primary)/0.12);
 }
 
-/* Nord: very subtle glow */
-[data-site-theme="nord"] .glow-primary {
-  box-shadow: 0 0 24px hsl(var(--primary) / 0.25);
+/* Autumn: warm card borders */
+[data-site-theme="autumn"] .border {
+  border-color: hsl(20 15% 18%) !important;
 }
 
-/* ── New theme special effects ───────────────────────────────────────────── */
-
-/* Synthwave: grid perspective floor + glow text */
-[data-site-theme="synthwave"] .gradient-text {
-  background-image: linear-gradient(135deg, hsl(280,100%,65%), hsl(320,100%,60%), hsl(195,100%,55%)) !important;
-  filter: drop-shadow(0 0 8px hsl(280,100%,65%));
-}
-[data-site-theme="synthwave"] .glow-primary {
-  box-shadow: 0 0 20px hsl(280 100% 65% / 0.5), 0 0 60px hsl(320 100% 60% / 0.2);
-}
-
-/* Dracula: purple glow */
-[data-site-theme="dracula"] .gradient-text {
-  background-image: linear-gradient(135deg, hsl(265,89%,78%), hsl(326,100%,74%), hsl(135,94%,65%)) !important;
-}
-
-/* Solarized: ocean tones */
-[data-site-theme="solarized"] .gradient-text {
-  background-image: linear-gradient(135deg, hsl(205,69%,49%), hsl(175,59%,40%), hsl(68,100%,35%)) !important;
-}
-
-/* Forest: earth tones — desaturate borders */
-[data-site-theme="forest"] .border {
-  border-color: hsl(140 18% 18%) !important;
-}
-
-/* Sunset: warm glow */
-[data-site-theme="sunset"] .gradient-text {
-  background-image: linear-gradient(135deg, hsl(22,100%,58%), hsl(350,85%,60%), hsl(45,100%,55%)) !important;
-}
-[data-site-theme="sunset"] .glow-primary {
-  box-shadow: 0 0 30px hsl(22 100% 58% / 0.4), 0 0 60px hsl(350 85% 60% / 0.15);
-}
-
-/* Ocean: wavy card borders */
-[data-site-theme="ocean"] .gradient-text {
-  background-image: linear-gradient(135deg, hsl(185,75%,42%), hsl(200,70%,50%), hsl(215,80%,55%)) !important;
-}
-[data-site-theme="ocean"] .glow-primary {
-  box-shadow: 0 0 24px hsl(185 75% 42% / 0.35);
+/* ─────────────────────────────────────────────────────────────────────────────
+   PRINT (Resume page)
+───────────────────────────────────────────────────────────────────────────── */
+@media print {
+  .sidebar, nav, [data-no-print] { display: none !important; }
+  body { background: white; color: black; font-family: Georgia, serif; }
+  .gradient-text { background: none !important; color: black !important; -webkit-text-fill-color: black; }
+  .card { border: 1px solid #ccc !important; box-shadow: none !important; }
 }

@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { motion, useInView } from 'framer-motion';
-import { ScrollReveal, StaggerList, fadeUp, slideLeft, slideRight, scaleIn } from '@/lib/animations';
+import { ScrollReveal, StaggerList, HoverCard, fadeUp, slideLeft, slideRight, scaleIn, AnimatedNumber, AnimatedBar } from '@/lib/animations';
 import {
   BarChart2, Clock, Trophy, Target, Flame, Zap,
   TrendingUp, Star, Gamepad2, Award, Calendar, Activity,
