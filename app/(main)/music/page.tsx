@@ -150,7 +150,7 @@ export default function MusicPage() {
                 <Disc3 className="w-4 h-4" /> Genre Breakdown
               </h2>
               <div className="space-y-4">
-                {GENRES.map(g => <GenreBar key={g.name} {...g} />)}
+                {GENRES.map(g => <GenreBar key={g.name} genre={g.name} pct={g.pct} color={g.color} />)}
               </div>
             </CardContent>
           </Card>
