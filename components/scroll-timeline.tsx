@@ -5,50 +5,38 @@ import { useEffect, useRef } from "react";
 const timeline = [
   {
     year: '1998',
-    event: 'Started playing tennis',
+    event: 'Picked up a tennis racket',
     detail: 'Weekend lessons. Never really stopped.',
   },
   {
     year: '2007',
-    event: 'Won high school state  championship',
-    detail: 'We were so dominate that year!',
+    event: 'Won high school state championship',
+    detail: 'We were so dominant that year.',
   },
   {
     year: '2012',
     event: 'Graduated UConn',
-    detail:
-      'Studied there, played there, left with a degree and no idea what was next.',
+    detail: 'Studied there, played there, left with a degree and no idea what was next.',
   },
   {
-    year: '2015',
-    event: 'Coaching at a local club',
-    detail: 'Early mornings, long days, zero regrets.',
+    year: '2016',
+    event: 'Started building things for the web',
+    detail: 'First real project. Ugly code, but it worked.',
   },
-  { year: '2018', event: 'USPTA certified', detail: 'Made it official.' },
+  {
+    year: '2020',
+    event: 'Went deep on reading',
+    detail: 'Somewhere between lockdown and boredom, books became a habit.',
+  },
   {
     year: '2021',
     event: 'Started playing pickleball',
     detail: 'Picked it up on a whim. Got serious within a month.',
   },
   {
-    year: '2022',
-    event: '100th student',
-    detail: 'Realized I had something worth continuing.',
-  },
-  {
-    year: '2024',
-    event: 'Coach top 10 singles player CT',
-    detail: 'No better feeling as a coach.',
-  },
-  {
-    year: '2025',
-    event: 'Reached 4.4 DUPR in pickleball',
-    detail: 'Still climbing.',
-  },
-  {
-    year: '2026',
-    event: 'First 4.5 USTA match',
-    detail: 'Been working toward this level for a while.',
+    year: '2023',
+    event: 'Launched this site',
+    detail: 'A place to put everything that doesn\'t fit anywhere else.',
   },
   {
     year: 'Now',
