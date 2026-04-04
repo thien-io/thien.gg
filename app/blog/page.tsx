@@ -25,10 +25,10 @@ export default function BlogPage() {
           <ScrollReveal>
             <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-8">Blog</p>
             <h1 className="font-display text-5xl md:text-6xl font-light leading-tight mb-6">
-              Writing on<br /><em className="text-primary">tennis & life.</em>
+              Writing on<br /><em className="text-primary">things I care about.</em>
             </h1>
             <p className="text-muted-foreground max-w-sm leading-relaxed">
-              Things I've been thinking about — on the court and off it. Pull up a chair.
+              Things I&apos;ve been thinking about. Pull up a chair.
             </p>
           </ScrollReveal>
         </div>

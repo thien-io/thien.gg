@@ -6,37 +6,32 @@ const timeline = [
   {
     year: '1998',
     event: 'Picked up a tennis racket',
-    detail: 'Weekend lessons. Never really stopped.',
+    detail: 'Weekend lessons turned into a decade of competitive play.',
   },
   {
     year: '2007',
     event: 'Won high school state championship',
-    detail: 'We were so dominant that year.',
+    detail: 'We were dominant that year.',
   },
   {
     year: '2012',
     event: 'Graduated UConn',
-    detail: 'Studied there, played there, left with a degree and no idea what was next.',
+    detail: 'Studied there, left with a degree and no idea what was next.',
   },
   {
     year: '2016',
-    event: 'Started building things for the web',
-    detail: 'First real project. Ugly code, but it worked.',
+    event: 'Started building for the web',
+    detail: 'First real project. Ugly code, but it shipped.',
   },
   {
     year: '2020',
-    event: 'Went deep on reading',
-    detail: 'Somewhere between lockdown and boredom, books became a habit.',
-  },
-  {
-    year: '2021',
-    event: 'Started playing pickleball',
-    detail: 'Picked it up on a whim. Got serious within a month.',
+    event: 'Books became a habit',
+    detail: 'Somewhere between lockdown and boredom, reading stuck.',
   },
   {
     year: '2023',
     event: 'Launched this site',
-    detail: 'A place to put everything that doesn\'t fit anywhere else.',
+    detail: "A place to put everything that doesn't fit anywhere else.",
   },
   {
     year: 'Now',

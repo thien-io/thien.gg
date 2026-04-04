@@ -6,11 +6,11 @@ import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Thien",
-  description: "Personal site — building things, reading, watching, playing.",
+  description: "Personal site — building things, reading, watching, and thinking.",
   metadataBase: new URL("https://thien.gg"),
   openGraph: {
     title: "Thien",
-    description: "Personal site — building things, reading, watching, playing.",
+    description: "Personal site — building things, reading, watching, and thinking.",
     url: "https://thien.gg",
     siteName: "thien.gg",
     locale: "en_US",

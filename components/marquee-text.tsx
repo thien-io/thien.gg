@@ -1,34 +1,34 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 
-interface MarqueeTextProps {
-  text: string;
-  className?: string;
-}
-
-export function MarqueeText({ text, className = "" }: MarqueeTextProps) {
+export function MarqueeText({ text, className }: { text: string; className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef      = useRef<HTMLSpanElement>(null);
-  const [dist, setDist] = useState(0);
+  const textRef = useRef<HTMLSpanElement>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
 
   useEffect(() => {
-    const container = containerRef.current;
-    const textEl    = textRef.current;
-    if (!container || !textEl) return;
-    const overflow = textEl.scrollWidth - container.clientWidth;
-    setDist(overflow > 2 ? overflow : 0);
+    if (!containerRef.current || !textRef.current) return;
+    setShouldScroll(textRef.current.scrollWidth > containerRef.current.clientWidth);
   }, [text]);
 
   return (
-    <div ref={containerRef} className="overflow-hidden">
+    <div ref={containerRef} className={`overflow-hidden whitespace-nowrap ${className ?? ""}`}>
       <span
         ref={textRef}
-        className={`inline-block whitespace-nowrap ${dist > 0 ? "marquee-running" : ""} ${className}`}
-        style={dist > 0 ? ({ "--marquee-dist": `-${dist}px` } as React.CSSProperties) : {}}
+        className={shouldScroll ? "inline-block animate-[marquee_8s_linear_infinite]" : "inline-block"}
       >
         {text}
+        {shouldScroll && <span className="px-6">{text}</span>}
       </span>
+      {shouldScroll && (
+        <style suppressHydrationWarning>{`
+          @keyframes marquee {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+        `}</style>
+      )}
     </div>
   );
 }

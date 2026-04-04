@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   Home, BookOpen, Users, Menu, X, Moon, Sun, Mail,
-  Music, Film, Library, PenLine, ChevronDown, Gamepad2,
+  Music, Film, PenLine, ChevronDown,
 } from "lucide-react";
 import { ColorPicker } from "@/components/color-picker";
 import { useTheme } from "next-themes";
@@ -13,22 +13,13 @@ import { useTheme } from "next-themes";
 const mainLinks = [
   { href: "/",          label: "Home",      icon: Home     },
   { href: "/about",     label: "About",     icon: BookOpen },
-  { href: "/guestbook", label: "Guestbook", icon: Users    },
   { href: "/blog",      label: "Blog",      icon: PenLine  },
+  { href: "/guestbook", label: "Guestbook", icon: Users    },
 ];
 
 const lifeLinks = [
-  { href: "/music",  label: "Music",   icon: Music   },
-  { href: "/movies", label: "Movies",  icon: Film    },
-  { href: "/books",  label: "Library", icon: Library },
-];
-
-const gameLinks = [
-  { href: "/game",        label: "Brick Breaker", icon: Gamepad2 },
-  { href: "/snake",       label: "Snake",         icon: Gamepad2 },
-  { href: "/pong",        label: "Pong",          icon: Gamepad2 },
-  { href: "/ballrush",    label: "Ball Rush",     icon: Gamepad2 },
-  { href: "/tennistanks", label: "Tennis Tanks",  icon: Gamepad2 },
+  { href: "/music",  label: "Music",  icon: Music },
+  { href: "/movies", label: "Movies", icon: Film  },
 ];
 
 function ThemeToggle() {
@@ -64,8 +55,7 @@ function CollapsibleSection({
 export function Sidebar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [lifeOpen, setLifeOpen]     = useState(true);
-  const [gamesOpen, setGamesOpen]   = useState(false);
+  const [lifeOpen, setLifeOpen] = useState(true);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -94,20 +84,8 @@ export function Sidebar() {
           </Link>
         ))}
 
-        {/* Life section */}
         <CollapsibleSection label="Life" open={lifeOpen} onToggle={() => setLifeOpen(o => !o)}>
           {lifeLinks.map(({ href, label, icon: Icon }) => (
-            <Link key={href} href={href} onClick={() => setMobileOpen(false)}
-              className={`sidebar-link ${isActive(href) ? "active" : ""}`}>
-              <Icon className="h-3.5 w-3.5 shrink-0" />
-              <span className="text-[13px]">{label}</span>
-            </Link>
-          ))}
-        </CollapsibleSection>
-
-        {/* Games section */}
-        <CollapsibleSection label="Games" open={gamesOpen} onToggle={() => setGamesOpen(o => !o)}>
-          {gameLinks.map(({ href, label, icon: Icon }) => (
             <Link key={href} href={href} onClick={() => setMobileOpen(false)}
               className={`sidebar-link ${isActive(href) ? "active" : ""}`}>
               <Icon className="h-3.5 w-3.5 shrink-0" />

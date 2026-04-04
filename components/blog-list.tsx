@@ -10,18 +10,14 @@ function formatDate(d: string) {
 }
 
 const TAG_COLORS: Record<string, string> = {
-  tennis:    "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/25",
-  technique: "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/25",
-  mindset:   "bg-violet-500/10 text-violet-700 dark:text-violet-400 border-violet-500/25",
-  coaching:  "bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/25",
-  practice:  "bg-teal-500/10 text-teal-700 dark:text-teal-400 border-teal-500/25",
-  strategy:  "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/25",
   life:      "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/25",
-  film:      "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/25",
-  local:     "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/25",
+  mindset:   "bg-violet-500/10 text-violet-700 dark:text-violet-400 border-violet-500/25",
   books:     "bg-yellow-500/10 text-yellow-700 dark:text-yellow-500 border-yellow-500/25",
-  footwork:  "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border-cyan-500/25",
-  serve:     "bg-sky-500/10 text-sky-700 dark:text-sky-400 border-sky-500/25",
+  film:      "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/25",
+  music:     "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/25",
+  tech:      "bg-teal-500/10 text-teal-700 dark:text-teal-400 border-teal-500/25",
+  strategy:  "bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/25",
+  local:     "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/25",
 };
 
 export function BlogList({ posts, tags }: { posts: PostMeta[]; tags: string[] }) {

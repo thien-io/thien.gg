@@ -19,8 +19,8 @@ export function Hero() {
           </h1>
           <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-sm md:max-w-md mb-12 hero-item"
              style={{ animationDelay: "400ms" }}>
-            Welcome. This is where I share what I&apos;m playing, reading, watching,
-            and thinking about.
+            Welcome to my little corner of the internet. I share what I&apos;m
+            reading, watching, listening to, and thinking about.
           </p>
           <div className="flex items-center gap-5 hero-item pointer-events-auto select-auto"
                style={{ animationDelay: "540ms" }}>
